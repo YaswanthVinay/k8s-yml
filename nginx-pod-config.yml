@@ -1,21 +1,23 @@
 apiVersion: v1
-kind: pod
+kind: Pod
 metadata:
   name: nginx-pod
 spec:
   containers:
-    - name : nginx-pod-test
-      image : nginx:latest
+    - name: nginx-pod-test
+      image: nginx:latest
       volumeMounts:
-      - name: test-mount
-        mountPath: "/etc/non-sensitive-data"
-        readOnly: true
-  volumes :
-   - name: test-mount
-     ConfigMap:
-
-
+        - name: test-mount
+          mountPath: "/etc/non-sensitive-data"
+          readOnly: true
+  volumes:
+    - name: test-mount
+      configMap:
+        name: nginx-cm
+        items:
+          - key: file-1.txt
+            path: file-a.txt
+          - key: file-2.txt
+            path: file-b.txt
 
 # kubectl create configmap nginx-cm  --from-file=file1.txt --from-file-file2.txt
-
-
